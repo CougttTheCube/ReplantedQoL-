@@ -5,7 +5,7 @@ using ReplantAPI.Core;
 using MelonLoader;
 using ReplantedModding2; // The namespace of your mod class
                          
-[assembly: MelonInfo(typeof(TestMod), "Test Mod", "1.0", "Cougtt")]
+[assembly: MelonInfo(typeof(ReplantedQoL), "ReplantedQoL", "1.0-beta", "Cougtt")]
 
 
 
@@ -14,11 +14,11 @@ using ReplantedModding2; // The namespace of your mod class
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ReplantedModding2")]
+[assembly: AssemblyTitle("ReplantedQoL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ReplantedModding2")]
+[assembly: AssemblyProduct("ReplantedQoL")]
 [assembly: AssemblyCopyright("Copyright ©  2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
