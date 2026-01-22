@@ -63,27 +63,18 @@ namespace ReplantedModding2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream grasswalk {
+            get {
+                return ResourceManager.GetStream("grasswalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream grasswalk_rip {
             get {
                 return ResourceManager.GetStream("grasswalk_rip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream UltimateBattleAncientEgyptTroll {
-            get {
-                return ResourceManager.GetStream("UltimateBattleAncientEgyptTroll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream UltimateBattlePvZ2Troll {
-            get {
-                return ResourceManager.GetStream("UltimateBattlePvZ2Troll", resourceCulture);
             }
         }
     }

@@ -21,44 +21,57 @@ using UnityEngine;
 using static MelonLoader.MelonLogger;
 using static UnityEngine.U2D.ClipperOffset2D;
 using API = ReplantAPI.Core.ReplantAPI;
+/*
+TODO: - Add more QoL features: 
+      - Replace wav files with mp3 files to reduce mod size
 
 
+
+*/
 namespace ReplantedModding2
 {
-	
 
 	public class ReplantedQoL : MelonMod
 	{
 		
 		public override void OnInitializeMelon()
 		{
-			LoggerInstance.Msg("Custom Mod Initialized!");
-			LoggerInstance.Msg("Using ReplantAPI - Made by HenHen!");
+			LoggerInstance.Msg("ReplantedQoL Initialized - Made by Cougtt!");
+			LoggerInstance.Msg("Using ReplantAPI v1.0.2 - Made by HenHen!");
 			LoggerInstance.Msg("--------------------------------");
-			LoggerInstance.Msg("S - Activate this mod!");
+			LoggerInstance.Msg("S - Toggle this mod!");
 			LoggerInstance.Msg("A - Set sun to 9999!");
+			LoggerInstance.Msg("C - Toggle Instant Cooldown!");
+			LoggerInstance.Msg("--------------------------------");
+			LoggerInstance.Msg("GAME SPEED");
 			LoggerInstance.Msg("LeftArrow - Set speed to 0.5!");
 			LoggerInstance.Msg("RightArrow - Set speed to 5!");
 			LoggerInstance.Msg("Z - Decrease speed by 0.5 (down to 0,5x)!");
 			LoggerInstance.Msg("X - Increase speed by 0.5 (up to 5x)!");
-			LoggerInstance.Msg("C - Instant Cooldown!");
+			LoggerInstance.Msg("--------------------------------");
+			LoggerInstance.Msg("MUSIC");
 			LoggerInstance.Msg("L - Play Loonboon Soundtrack!");
 			LoggerInstance.Msg("K - Play Brainiac Maniac Soundtrack!");
 			LoggerInstance.Msg("J - Play Conveyer Soundtrack!");
-			LoggerInstance.Msg("U - Play Custom Soundtrack! [currently in beta]");
+			LoggerInstance.Msg("P - Play Custom Soundtrack! [currently in beta]");
+			LoggerInstance.Msg("O - Toggle Pause Custom Soundtrack! [currently in beta]");
+			LoggerInstance.Msg("Y - Stop Custom Soundtrack! [currently in beta]");
+			LoggerInstance.Msg("Using Custom Soundtrack: Grasswalk RIP");
 			LoggerInstance.Msg("--------------------------------");
 			LoggerInstance.Msg("Thank you for using ^_^");
 
+			//Setting up custom audio player
 			player = new AudioPlayer();
-
-			player.LoadWavFromResource(Properties.Resources.grasswalk_rip);
+			player.LoadMp3FromResource(Properties.Resources.grasswalk);
 			player.Loop = true;
 		}
 
 
 		public float speed = 1f;
+
 		public bool IsInstantCooldown = false;
 		public bool IsCustomSoundtrack = false;
+
 		public bool IsModActive = false;
 
 		private bool IsPlayerPlaying = false;
@@ -66,35 +79,26 @@ namespace ReplantedModding2
 
 		public bool TogglePause = false;
 
-		
-
 		private AudioPlayer player;
-
-		//todo: fix custom music playing outside of pause menu :/
 
 		public override void OnUpdate()
 
 		{
 			try
 			{
-
-				//var player = new AudioPlayer();
+				//Ensure player is valid and game is active
 				if (player == null)
 				{
 					return;
 				}
-
-
-
-				//replantapi is really ahh rn so there's nothing i can do :/
 				if (!API.IsGameActive)
-				{
-					
+				{				
 					player.Stop();
 					return;
 				}
 
-				//Stop custom track when in menu
+
+				//Stop custom track when in pause menu
 				if (IsCustomSoundtrack)
 				{
 					if (Time.timeScale <= 0f && IsPlayerPlaying && !IsPausedByMenu) //if i was playing, then pause game then stop audio
@@ -104,7 +108,6 @@ namespace ReplantedModding2
 						IsPlayerPlaying = false;
 						IsPausedByMenu = true;
 					}
-
 					else if (Time.timeScale > 0f && IsPausedByMenu) //if paused by menu and is in gameplay, then continue audio
 					{
 						player.Play();
@@ -112,7 +115,6 @@ namespace ReplantedModding2
 						IsPlayerPlaying = true;
 						IsPausedByMenu = false;
 					}
-					//need sth to detect when i exit to the main menu
 				}
 
 
@@ -130,7 +132,6 @@ namespace ReplantedModding2
 						LoggerInstance.Msg("Mod Enabled!");
 					}
 				}
-
 				// Press K to set sun to 9999
 				if (Input.GetKeyDown(KeyCode.A))
 				{
@@ -140,7 +141,9 @@ namespace ReplantedModding2
 					LoggerInstance.Msg("Set sun to 9999");
 				}
 
-				// Game speed control 
+
+
+				// ------------------------------GAME SPEED-------------------------------
 				// Press LeftArrow to set speed scale to 0.5
 				if (Input.GetKeyDown(KeyCode.LeftArrow))
 				{
@@ -193,6 +196,10 @@ namespace ReplantedModding2
 					Time.timeScale = speed;
 				}
 
+
+
+
+
 				// Press C to toggle instant cooldown
 				if (API.IsGameActive && Input.GetKeyDown(KeyCode.C))
 				{
@@ -205,6 +212,16 @@ namespace ReplantedModding2
 					API.Player.EnableInstantCooldown();
 				}
 
+
+
+
+
+
+
+
+
+
+				// ------------------------------MUSIC-------------------------------
 				// Press L to play Loonboon soundtrack
 				if (API.IsGameActive && (Input.GetKeyDown(KeyCode.L)))
 				{
@@ -256,23 +273,6 @@ namespace ReplantedModding2
 					LoggerInstance.Msg("Playing Conveyer!");
 				}
 
-				// Press U to play custom soundtrack
-				if (API.IsGameActive && (Input.GetKeyDown(KeyCode.U)))
-				{
-					if (!IsModActive) return;
-
-					IsCustomSoundtrack = true;
-
-					IsPausedByMenu = false;
-					IsPlayerPlaying = true;
-
-					// turn off other music and play custom music
-					API.AudioService.PlayMusic(MusicTune.None);
-					//player1.PlayLooping();
-					LoggerInstance.Msg("Playing Loon Skirmish soundtrack! [currently in beta]");
-
-				}
-
 
 				// Press Y to stop the fucking custom soundtrack
 				if (API.IsGameActive && (Input.GetKeyDown(KeyCode.Y)))
@@ -285,6 +285,7 @@ namespace ReplantedModding2
 					API.AudioService.PlayMusic(MusicTune.NumMusicTunes);
 				}
 
+				//Stop custom music when one side won in versus mode
 				if (API.GameplayActivity.VersusMode != null && API.GameplayActivity.VersusMode.m_winInitialized)
 				{
 					if (IsCustomSoundtrack)
@@ -295,10 +296,8 @@ namespace ReplantedModding2
 						IsPausedByMenu = false;
 					}
 				}
-
-
-
-
+			
+				//Press P to play Custom Grasswalk RIP track
 				if (API.IsGameActive && (Input.GetKeyDown(KeyCode.P)))
 				{
 					if (!IsModActive) return;
@@ -314,7 +313,7 @@ namespace ReplantedModding2
 					player.Play();
 					LoggerInstance.Msg("Playing Grasswalk RIP track!");
 				}
-
+				//Press O to toggle pause custom track
 				if (API.IsGameActive && (Input.GetKeyDown(KeyCode.O)))
 				{
 					if (!IsModActive) return;
@@ -332,6 +331,23 @@ namespace ReplantedModding2
 
 				}
 
+
+
+
+				if (API.IsGameActive && (Input.GetKeyDown(KeyCode.M)))
+				{
+					if (!IsModActive) return;
+
+					//bool asdf = API.GameplayActivity.CanShowAlmanac();
+					//bool asdff = API.GameplayActivity.GameplayService.WasCollected;
+					//API.GameplayActivity.CheckForGameEnd();
+					//API.GameplayActivity.EndLevel();
+					//API.GameplayActivity.FadeOutCutScene();
+				}
+
+
+
+
 			}
 			catch (Exception ex)
 			{
@@ -348,7 +364,6 @@ namespace ReplantedModding2
 			{				
 				if (IsCustomSoundtrack)
 				{
-					
 					player.Stop();
 					IsCustomSoundtrack = false;
 					IsPlayerPlaying = false;
@@ -356,14 +371,15 @@ namespace ReplantedModding2
 				}
 			}
 		}
+		
 
-    }
+	}
 
 
 
 
-        //Patch Using Flower Pot in Versus Mode
-        [HarmonyPatch(typeof(SeedChooserScreen), nameof(SeedChooserScreen.SeedNotAllowedToPick))]
+        //Patch: Being able to use Flower Pot in Versus Mode
+    [HarmonyPatch(typeof(SeedChooserScreen), nameof(SeedChooserScreen.SeedNotAllowedToPick))]
 	internal static class SeedChooserDataModelPatch
 	{
 		[HarmonyPrefix]
@@ -381,12 +397,4 @@ namespace ReplantedModding2
 			return true;
 		}
 	}
-
-
-
-
-	
-
-
-
 }

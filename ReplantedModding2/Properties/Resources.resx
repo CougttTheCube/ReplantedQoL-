@@ -118,13 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="grasswalk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\grasswalk.MP3;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="grasswalk_rip" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\grasswalk_rip.WAV;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="UltimateBattleAncientEgyptTroll" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\0117 (1).wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="UltimateBattlePvZ2Troll" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\0117 (1) (1).wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
